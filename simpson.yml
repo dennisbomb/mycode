@@ -1,0 +1,27 @@
+---
+- name: Retrieve a random Simpsons quote and assert its Homer
+  hosts: localhost
+  connection: local                                                  # USE THE LOCAL CONNECTION WHEN USING LOCALHOST AS A HOST
+  gather_facts: no
+
+  tasks:                                                             # SPELLED 'tasks,' NOT 'taskz'
+    - name: Read a quote from The Simpsons API
+      uri:
+        url: https://thesimpsonsquoteapi.glitch.me/quotes?character=simpson
+        method: GET                                                  # WE ARE READING, NOT CREATING-- USE GET REQUEST!
+        return_content: yes
+      register: quote_response
+
+    - name: Print the quote data received
+      debug:
+        var: quote_response.json[0]
+
+    - name: Display the ONLY the quote
+      debug:
+        msg: "{{ quote_response.json[0].quote }}"                    # GOT TO USE {{ CURLY BRACES }} TO RETURN VALUE OF A VARIABLE
+
+    - name: Assert the quote is from Homer Simpson
+      assert:
+        that: quote_response.json[0].character == "Homer Simpson"    # ASSERT USES 'THAT' TO DECLARE ITS CONDITION, NOT 'WHEN'
+        fail_msg: "Not a Homer quote. D'oh!"                         # CONSISTENT INDENTATION IS KEY! BOTH THIS LINE AND
+        success_msg: "This IS a Homer quote. WOO-HOO!"               # THIS ONE MUST BE ALIGNED WITH THE FIRST PARAMETER

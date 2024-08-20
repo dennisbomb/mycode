@@ -1,0 +1,17 @@
+---
+- name: Send an HTTP GET to at least one RedFish endpoint
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  
+  tasks:
+
+  - name: Send an HTTP GET to EventService
+    uri:
+      url: http://127.0.0.1:2224/redfish/v1/EventService
+    register: EventServiceResponse
+  
+  - name: "Output response"
+    debug:
+      var: EventServiceResponse
+

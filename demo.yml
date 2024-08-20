@@ -1,0 +1,12 @@
+- name: play - demo of loops and debug
+  hosts: localhost
+  connection: local
+
+  vars:
+    fav_character: "Batman"
+
+  tasks:
+
+  - name: using a variable with {{ }}
+    debug:
+      msg: "hello {{fav_character}}"
