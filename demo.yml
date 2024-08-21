@@ -3,18 +3,10 @@
   connection: local
 
   vars:
-    characters:
-      heroes:
-        - thor
-        - batman
-        - hellboy
-      villains:
-        - thanos
-        - darkseid
-        - rasputin
+    fav_character: "Batman"
 
   tasks:
-    - name: Displaying favorite hero
-      debug:
-        msg: "My favorite hero is {{ item }}!"
-      loop: "{{ characters.heroes }}"
+
+  - name: using a variable with {{ }}
+    debug:
+      msg: "hello {{fav_character}}"
